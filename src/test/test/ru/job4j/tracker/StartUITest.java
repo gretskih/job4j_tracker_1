@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import ru.job4j.tracker.action.*;
 import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.input.StubInput;
@@ -13,9 +14,6 @@ import ru.job4j.tracker.store.Store;
 
 import java.util.Arrays;
 import java.util.Objects;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
-import static org.hamcrest.core.IsNull.nullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -45,10 +43,10 @@ public class StartUITest {
                 new ExitAction(output)
         };
         new StartUI(output).init(in, memTracker, Arrays.asList(actions));
-        assertThat(output.toString(),
-                is("Menu." + is + "0. === Show all items ==="
+        Assertions.assertEquals(output.toString(),
+                "Menu." + is + "0. === Show all items ==="
                         + is + "1. Exit" + is + item1 + is + item2 + is
-                        + "Menu." + is + "0. === Show all items ===" + is + "1. Exit" + is));
+                        + "Menu." + is + "0. === Show all items ===" + is + "1. Exit" + is);
     }
 
     @Test
@@ -62,13 +60,13 @@ public class StartUITest {
                 new ExitAction(out)
         };
         new StartUI(out).init(in, memTracker, Arrays.asList(actions));
-        assertThat(out.toString(), is(String.format(
+        Assertions.assertEquals(out.toString(), String.format(
                 "Menu.%n"
                         + "0. Exit%n"
                         + "wrong input, you can select: 0.. 0%n"
                         + "Menu.%n"
                         + "0. Exit%n"
-        )));
+        ));
     }
 
     @Test
@@ -83,7 +81,7 @@ public class StartUITest {
                 new ExitAction(output)
         };
         new StartUI(output).init(in, memTracker, Arrays.asList(actions));
-        assertThat(memTracker.findAll().get(0).getName(), is("Item name"));
+        Assertions.assertEquals(memTracker.findAll().get(0).getName(), "Item name");
     }
 
     @Test
@@ -100,9 +98,8 @@ public class StartUITest {
             new ExitAction(output)
         };
         new StartUI(output).init(in, memTracker, Arrays.asList(actions));
-        assertThat(Objects.requireNonNull(memTracker.findById(item.getId())).getName(),
-                is(replacedName));
-
+        Assertions.assertEquals(Objects.requireNonNull(memTracker.findById(item.getId())).getName(),
+                replacedName);
     }
 
     @Test
@@ -118,7 +115,7 @@ public class StartUITest {
                 new ExitAction(output)
         };
         new StartUI(output).init(in, memTracker, Arrays.asList(actions));
-        assertThat(memTracker.findById(item.getId()), is(nullValue()));
+        Assertions.assertNull(memTracker.findById(item.getId()));
     }
 
     @Test
@@ -132,9 +129,9 @@ public class StartUITest {
                 new ExitAction(out)
         };
         new StartUI(out).init(in, memTracker, Arrays.asList(actions));
-        assertThat(out.toString(), is(
+        Assertions.assertEquals(out.toString(),
                 "Menu." + System.lineSeparator() + "0. Exit" + System.lineSeparator()
-        ));
+        );
     }
 
     @Test
@@ -151,11 +148,11 @@ public class StartUITest {
                 new ExitAction(output)
         };
         new StartUI(output).init(in, memTracker, Arrays.asList(actions));
-        assertThat(output.toString(),
-                is("Menu." + is + "0. === Find items by name ==="
+        Assertions.assertEquals(output.toString(),
+                "Menu." + is + "0. === Find items by name ==="
                         + is + "1. Exit" + is + item
                         + is + "Menu." + is + "0. === Find items by name ==="
-                        + is + "1. Exit" + is));
+                        + is + "1. Exit" + is);
     }
 
     @Test
@@ -172,10 +169,10 @@ public class StartUITest {
                 new ExitAction(output)
         };
         new StartUI(output).init(in, memTracker, Arrays.asList(actions));
-        assertThat(output.toString(), is("Menu."
+        Assertions.assertEquals(output.toString(), "Menu."
                 + is + "0. === Find item by id ===" + is
                 + "1. Exit" + is + "Founded item: " + item
-                + is + "Menu." + is + "0. === Find item by id ===" + is + "1. Exit" + is));
+                + is + "Menu." + is + "0. === Find item by id ===" + is + "1. Exit" + is);
     }
 
     @Test
@@ -192,8 +189,9 @@ public class StartUITest {
         del.execute(input, store);
 
         String ln = System.lineSeparator();
-        assertThat(output.toString(), is("Item is successfully deleted!" + ln));
-        assertThat(store.findAll().isEmpty(), is(true));
+
+        Assertions.assertEquals(output.toString(), "Item is successfully deleted!" + ln);
+        Assertions.assertTrue(store.findAll().isEmpty());
     }
 
     @Test
@@ -210,8 +208,8 @@ public class StartUITest {
         del.execute(input, store);
 
         String ln = System.lineSeparator();
-        assertThat(output.toString(), is("Wrong id!" + ln));
-        assertThat(store.findAll().isEmpty(), is(false));
+        Assertions.assertEquals(output.toString(), "Wrong id!" + ln);
+        Assertions.assertFalse(store.findAll().isEmpty());
     }
 
     @Test
@@ -229,8 +227,8 @@ public class StartUITest {
         find.execute(input, store);
 
         String ln = System.lineSeparator();
-        assertThat(output.toString(), is("Founded item: " + addItem + ln));
-        assertThat(store.findAll().get(0).getName(), is(addItem.getName()));
+        Assertions.assertEquals(output.toString(), "Founded item: " + addItem + ln);
+        Assertions.assertEquals(store.findAll().get(0).getName(), addItem.getName());
     }
 
     @Test
@@ -248,8 +246,8 @@ public class StartUITest {
         find.execute(input, store);
 
         String ln = System.lineSeparator();
-        assertThat(output.toString(), is("Wrong id! Not found" + ln));
-        assertThat(store.findAll().get(0).getName(), is(addItem.getName()));
+        Assertions.assertEquals(output.toString(), "Wrong id! Not found" + ln);
+        Assertions.assertEquals(store.findAll().get(0).getName(), addItem.getName());
     }
 
     @Test
@@ -267,8 +265,8 @@ public class StartUITest {
         find.execute(input, store);
 
         String ln = System.lineSeparator();
-        assertThat(output.toString(), is(addItem.toString() + ln));
-        assertThat(store.findAll().get(0).getName(), is(findName));
+        Assertions.assertEquals(output.toString(), addItem + ln);
+        Assertions.assertEquals(store.findAll().get(0).getName(), findName);
     }
 
     @Test
@@ -286,7 +284,7 @@ public class StartUITest {
         find.execute(input, store);
 
         String ln = System.lineSeparator();
-        assertThat(output.toString(), is("Error, we can`t find item" + ln));
-        assertThat(store.findAll().get(0).getName(), is(findName));
+        Assertions.assertEquals(output.toString(), "Error, we can`t find item" + ln);
+        Assertions.assertEquals(store.findAll().get(0).getName(), findName);
     }
 }
