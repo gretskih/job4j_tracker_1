@@ -4,15 +4,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Item implements Comparable<Item> {
 
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
+    @EqualsAndHashCode.Include
     private int id;
 
+    @EqualsAndHashCode.Include
     private String name;
 
     private LocalDateTime created = LocalDateTime.now();
