@@ -6,6 +6,10 @@ import java.time.format.DateTimeFormatter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "items")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Item implements Comparable<Item> {
@@ -13,6 +17,8 @@ public class Item implements Comparable<Item> {
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id;
 
