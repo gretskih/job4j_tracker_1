@@ -67,7 +67,7 @@ public class HibernateRun {
         Session session = sf.openSession();
         session.beginTransaction();
         List<Item> result = session
-                .createQuery("from ru.job4j.tracker.model.Item", Item.class)
+                .createQuery("from Item", Item.class)
                 .list();
         session.getTransaction().commit();
         session.close();
