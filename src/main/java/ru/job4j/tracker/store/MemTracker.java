@@ -4,11 +4,6 @@ import ru.job4j.tracker.model.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author artem.polschak@gmail.com on 24.06.2022.
- * @project job4j_tracker
- */
-
 public final class MemTracker implements Store {
     private final List<Item> items = new ArrayList<>();
     private int ids = 1;
