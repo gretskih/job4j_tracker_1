@@ -23,10 +23,9 @@ public class HbmTrackerTest {
 
     /**
      * Очистка базы
-     * @throws Exception
      */
     @BeforeEach
-    public void clearTableItem() throws Exception {
+    public void clearTableItem() {
         Session session = sf.openSession();
         try {
             session.beginTransaction();
@@ -41,10 +40,9 @@ public class HbmTrackerTest {
 
     /**
      * Поиск по Id
-     * @throws Exception
      */
     @Test
-    public void whenAddNewItemThenGetItemById() throws Exception {
+    public void whenAddNewItemThenGetItemById() {
         try (var tracker = new HbmTracker()) {
             Item item = new Item();
             item.setName("test1");
@@ -56,10 +54,9 @@ public class HbmTrackerTest {
 
     /**
      * Поиск по name
-     * @throws Exception
      */
     @Test
-    public void whenAddNewItemThenGetItemByName() throws Exception {
+    public void whenAddNewItemThenGetItemByName() {
         try (var tracker = new HbmTracker()) {
             Item item1 = new Item();
             item1.setName("test");
@@ -74,10 +71,9 @@ public class HbmTrackerTest {
 
     /**
      * Извлечение списка всех записей
-     * @throws Exception
      */
     @Test
-    public void whenAddNewItemThenGetAllItems() throws Exception {
+    public void whenAddNewItemThenGetAllItems() {
         try (var tracker = new HbmTracker()) {
             Item item1 = new Item();
             item1.setName("test1");
@@ -92,10 +88,9 @@ public class HbmTrackerTest {
 
     /**
      * Перезаписывание записи
-     * @throws Exception
      */
     @Test
-    public void whenReplaceItemThenGetNewItem() throws Exception {
+    public void whenReplaceItemThenGetNewItem() {
         try (var tracker = new HbmTracker()) {
             Item item = new Item();
             item.setName("test1");
@@ -111,10 +106,9 @@ public class HbmTrackerTest {
 
     /**
      * Удаление записи
-     * @throws Exception
      */
     @Test
-    public void whenAddTwoItemsAndDeleteOneItemThenGetOneItem() throws Exception {
+    public void whenAddTwoItemsAndDeleteOneItemThenGetOneItem() {
         try (var tracker = new HbmTracker()) {
             Item item1 = new Item();
             item1.setName("test1");
