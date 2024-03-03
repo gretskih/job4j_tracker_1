@@ -12,9 +12,13 @@
     <url>http://job4j.ru/</url>
 
     <properties>
+        <java.version>17</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--suppress UnresolvedMavenProperty -->
+        <docker_db_url_jdbc>${JDBC_URL}</docker_db_url_jdbc>
     </properties>
 
     <profiles>
@@ -37,6 +41,15 @@
                 <db.username>postgres</db.username>
                 <db.password>1413</db.password>
                 <db.driver>org.postgresql.Driver</db.driver>
+            </properties>
+        </profile>
+        <profile>
+            <id>docker</id>
+            <properties>
+                <liquibase.changeLogFile>db/master.xml</liquibase.changeLogFile>
+                <liquibase.url>${docker_db_url_jdbc}</liquibase.url>
+                <liquibase.username>postgres</liquibase.username>
+                <liquibase.password>1413</liquibase.password>
             </properties>
         </profile>
     </profiles>
@@ -107,7 +120,7 @@
     </dependencies>
     <build>
         <plugins>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>3.6.2</version>
@@ -128,7 +141,33 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>-->
+
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>4.15.0</version>
+                <configuration>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <changeLogFile>${liquibase.changeLogFile}</changeLogFile>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <url>${liquibase.url}</url>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <username>${liquibase.username}</username>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <password>${liquibase.password}</password>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>clearCheckSums</goal>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>

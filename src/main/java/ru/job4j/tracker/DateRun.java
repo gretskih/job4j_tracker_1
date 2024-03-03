@@ -7,6 +7,7 @@ import ru.job4j.tracker.model.Item;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.TimeZone;
 
 public class DateRun {
@@ -43,5 +44,15 @@ public class DateRun {
         } finally {
             StandardServiceRegistryBuilder.destroy(registry);
         }
+/*
+        var zones = new ArrayList<TimeZone>();
+        for (String timeId : TimeZone.getAvailableIDs()) {
+            zones.add(TimeZone.getTimeZone(timeId));
+        }
+        for (TimeZone zone : zones) {
+            System.out.println(zone.getID() + " : " + zone.getDisplayName());
+        }
+
+ */
     }
 }
